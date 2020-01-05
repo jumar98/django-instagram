@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path
 from posts import views
-from users.views import login_view, logout_view, signup_view
+from users.views import login_view, logout_view, signup_view, update_profile
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -25,5 +25,6 @@ urlpatterns = [
     path('posts/', views.list_posts, name='posts'),
     path('users/login/', login_view, name='login'),
     path('users/logout/', logout_view, name='logout'),
-    path('users/signup/', signup_view, name='signup')
+    path('users/signup/', signup_view, name='signup'),
+    path('users/me/profile/', update_profile, name='update_profile')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
