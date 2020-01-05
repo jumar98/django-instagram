@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from users.models import Profile
 from django.db.utils import IntegrityError
+from users.forms import ProfileForm
 
 # Create your views here.
 
@@ -55,4 +56,24 @@ def signup_view(request):
 
 def update_profile(request):
     """Update profile from users"""
-    return render(request, 'users/update_profile.html')
+    profile = request.user.profile
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+            profile.biography = data.get('biography')
+            profile.phone_number = data.get('phone_number')
+            profile.picture = data.get('picture')
+            profile.website = data.get('website')
+            profile.save()
+            return redirect('update_profile')
+    else:
+        form = ProfileForm()
+    return render(
+        request=request, 
+        template_name='users/update_profile.html',
+        context={
+            'profile':profile,
+            'user': request.user,
+            'form': form
+        })
