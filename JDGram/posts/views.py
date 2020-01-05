@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 
 posts = [
@@ -34,5 +35,6 @@ posts = [
 ]
 
 # Create your views here.
+@login_required
 def list_posts(requests):
     return render(requests, 'posts/feed.html', {'posts': posts})
