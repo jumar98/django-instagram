@@ -15,7 +15,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('posts')
+            return redirect('posts:posts')
         else:
             return render(request, 'users/login.html', {'error': "Invalid user or password"})
     return render(request, 'users/login.html')
@@ -24,7 +24,7 @@ def login_view(request):
 def logout_view(request):
     """Logout view"""
     logout(request)
-    return redirect('login')
+    return redirect('users:login')
 
 def signup_view(request):
     """Sign up view"""
@@ -32,7 +32,7 @@ def signup_view(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            redirect('login')
+            redirect('users:login')
     else:
         form = SignUpForm()
     
@@ -56,7 +56,7 @@ def update_profile(request):
             profile.picture = data.get('picture')
             profile.website = data.get('website')
             profile.save()
-            return redirect('update_profile')
+            return redirect('users:update_profile')
     else:
         form = ProfileForm()
     return render(

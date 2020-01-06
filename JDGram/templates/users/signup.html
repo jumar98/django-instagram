@@ -10,7 +10,7 @@
             {{ error }}
         </div>
     {% endif %}
-    <form method="POST" action="{% url 'signup'%}">
+    <form method="POST" action="{% url 'users:signup'%}">
         {% csrf_token %}
         <div class="form-group">
             <input class="form-control" type="text" name="username" placeholder="Username" required>
