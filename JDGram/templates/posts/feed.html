@@ -11,11 +11,11 @@
             <div class="col-sm-12 col-md-8 offset-md-2 mt-5 p-0 post-container">
                 <div class="media pt-3 pl-3 pb-1">
                     {% if request.user.profile.picture %}
-                        <a href="{% url 'users:update_profile' %}">
+                        <a href="{% url 'users:detail' request.user.username %}">
                             <img src="{{ request.user.profile.picture.url }}" height="35" class="d-inline-block align-top rounded-circle"/>
                         </a>
                     {% else %}
-                        <a href="{% url 'users:update_profile' %}">
+                        <a href="{% url 'users:detail' %}">
                             <img src="{% static 'img/profile.png' %}" height="35" class="d-inline-block align-top rounded-circle"/>
                         </a>
                     {% endif %}

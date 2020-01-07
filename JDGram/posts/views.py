@@ -4,12 +4,17 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from posts.forms import PostForm
 from posts.models import Post
-
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
-@login_required
-def list_posts(requests):
-    posts = Post.objects.all().order_by('-created')
-    return render(requests, 'posts/feed.html', {'posts': posts})
+
+class PostListView(LoginRequiredMixin, ListView):
+
+    template_name = 'posts/feed.html'
+    model = Post
+    ordering = ('-created',)
+    paginate_by = 2
+    context_object_name = 'posts'
 
 @login_required
 def create_post(request):
