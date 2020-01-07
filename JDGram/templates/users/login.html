@@ -3,8 +3,10 @@
     <title>JDGram Sign in</title>
 {% endblock %}
 {% block container %}
-    {% if error %}
-        <p class="alert alert-danger">{{ error }}</p>
+    {% if form.errors %}
+        <p class="alert alert-danger">
+            Your username and password didn't match, please check it and try again.
+        </p>
     {% endif%}
     <form method="POST" action="{% url 'users:login' %}">
         {% csrf_token %}

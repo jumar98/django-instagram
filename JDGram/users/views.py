@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView, LogoutView
 from posts.models import Post
 from users.models import Profile
 from users.forms import SignUpForm
@@ -10,24 +11,13 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
-def login_view(request):
-    """"Login view"""
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            return redirect('posts:posts')
-        else:
-            return render(request, 'users/login.html', {'error': "Invalid user or password"})
-    return render(request, 'users/login.html')
+class LoginViewUser(LoginView):
 
-@login_required
-def logout_view(request):
-    """Logout view"""
-    logout(request)
-    return redirect('users:login')
+    template_name = 'users/login.html'
+
+class LogOutUser(LoginRequiredMixin, LogoutView):
+
+    template_name = 'users/logout.html'
 
 class SignUpView(FormView):
 
